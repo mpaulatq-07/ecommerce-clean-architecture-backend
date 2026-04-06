@@ -38,3 +38,18 @@ const datasource = new MysqlProductDatasourceImpl();
 
 const repository = new ProductRepositoryImpl(datasource);
 const controller = new ProductController(repository);
+
+#### 2. Configuración de Compras e Inventario (`src/presentation/purchases/purchase.routes.ts`)
+En esta sección se inyectan ambos datasources para asegurar que la transacción financiera y la actualización de stock ocurran en el mismo motor:
+
+```typescript
+// Configuración activa para MySQL:
+const purchaseDatasource = new MysqlPurchaseDatasourceImpl();
+const productDatasource = new MysqlProductDatasourceImpl();
+
+// Configuración para conmutar a MongoDB:
+// const purchaseDatasource = new MongoPurchaseDatasourceImpl();
+// const productDatasource = new MongoProductDatasourceImpl();
+
+const purchaseRepository = new PurchaseRepositoryImpl(purchaseDatasource);
+const productRepository = new ProductRepositoryImpl(productDatasource);
